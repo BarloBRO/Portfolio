@@ -1,0 +1,6 @@
+bin/
+obj/
+Server/bin/
+Server/obj/
+*.user
+.vs/

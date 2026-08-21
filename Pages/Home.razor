@@ -1,0 +1,448 @@
+@page "/"
+@using System.Net.Http.Json
+@using BarloPortfolio.Models
+@using BarloPortfolio.Services
+@inject ApiClient Api
+
+<PageTitle>Barlo Ordiales | Portfolio</PageTitle>
+
+<section class="hero">
+    <div class="container">
+        <span class="eyebrow">Welcome to my portfolio</span>
+        <h1>Hi, I'm <span class="accent">Barlo Ordiales</span></h1>
+        <p class="role-line">Computer Engineer &nbsp;|&nbsp; C# &amp; .NET Developer &nbsp;|&nbsp; Quality-Driven Problem Solver</p>
+        <p class="lead">
+            Back-end and web developer building secure, reliable business applications with C#,
+            .NET, and SQL — from writing the server-side logic to testing it before it ships.
+        </p>
+        <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+        <div class="social-links">
+            <a href="@SocialLinks.GitHub" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub" title="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11.03 11.03 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .3.21.66.8.55A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z" /></svg>
+            </a>
+            <a href="@SocialLinks.Facebook" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook" title="Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z" /></svg>
+            </a>
+            <a href="mailto:@SocialLinks.Email" class="social-icon" aria-label="Email" title="Email">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6 12 13 2 6" /><path d="M2 6h20v12H2z" /></svg>
+            </a>
+        </div>
+        <a href="#about" class="scroll-cue" aria-label="Scroll down">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
+        </a>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <div class="section-head">
+            <h2>About Me</h2>
+            <p>Get to know me better</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-portrait">
+                <img src="images/profile.jpg" alt="Barlo Ordiales" />
+            </div>
+
+            <div class="about-copy">
+                <p>
+                    I'm a Computer Engineering graduate from Holy Angel University with hands-on experience
+                    across the full application lifecycle — development, deployment, and quality assurance. At
+                    Noah Business Application, I build and maintain business systems in C# and .NET, write the
+                    SQL behind them, and help ship releases without breaking what already works. I don't settle
+                    for the bare minimum — every project gets the same attention to detail, whether I'm writing
+                    the code or testing someone else's.
+                </p>
+
+                <div class="edu-card">
+                    <div class="label">Education</div>
+                    <div class="degree">Bachelor's Degree, Computer Engineering</div>
+                    <div class="school">Holy Angel University (HAU)</div>
+                    <div class="period">2021 &ndash; 2025</div>
+                </div>
+
+                <div class="stat-grid">
+                    @foreach (var stat in _stats)
+                    {
+                        <div class="stat-card">
+                            <div class="num">@stat.Value</div>
+                            <div class="label">@stat.Label</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="container">
+        <div class="section-head">
+            <h2>Skills &amp; Technologies</h2>
+            <p>What I build and troubleshoot with</p>
+        </div>
+
+        <div class="skill-cards">
+            @foreach (var group in _skillGroups)
+            {
+                <div class="skill-card">
+                    <div class="icon">@((MarkupString)group.Icon)</div>
+                    <h4>@group.Title</h4>
+                    <ul>
+                        @foreach (var skill in group.Skills)
+                        {
+                            <li>@skill</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+
+        <div class="skills-detail">
+            <div>
+                <h3>Technical Proficiency</h3>
+                @foreach (var item in _proficiency)
+                {
+                    <div class="proficiency-row">
+                        <div class="row-head">
+                            <span>@item.Name</span>
+                            <span class="pct">@item.Percent%</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:@(item.Percent)%"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div>
+                <h3>Soft Skills</h3>
+                <div class="soft-skills">
+                    @foreach (var soft in _softSkills)
+                    {
+                        <div class="soft-skill">@soft</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="container">
+        <div class="section-head">
+            <h2>Featured Projects</h2>
+            <p>A few things I've built and tested</p>
+        </div>
+
+        <div class="filter-bar">
+            @foreach (var filter in _filters)
+            {
+                <button class="filter-btn @(_activeFilter == filter ? "active" : "")" @onclick="() => SetFilter(filter)">
+                    @filter
+                </button>
+            }
+        </div>
+
+        <div class="project-grid">
+            @foreach (var project in FilteredProjects)
+            {
+                <div class="project-card">
+                    <div class="project-thumb">
+                        @if (project.Featured)
+                        {
+                            <span class="badge">Featured</span>
+                        }
+                        @((MarkupString)project.Icon)
+                    </div>
+                    <div class="project-body">
+                        <h3>@project.Title</h3>
+                        <p>@project.Description</p>
+                        <div class="tag-row">
+                            @foreach (var tag in project.Tags)
+                            {
+                                <span class="tag">@tag</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="container">
+        <div class="section-head">
+            <h2>Experience</h2>
+            <p>Where I've put these skills to work</p>
+        </div>
+
+        <div class="timeline">
+            @foreach (var exp in _experience)
+            {
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="period">@exp.Period</div>
+                        <h3>@exp.Role</h3>
+                        <div class="org">@exp.Organization</div>
+                        <p class="summary">@exp.Summary</p>
+                        <ul>
+                            @foreach (var highlight in exp.Highlights)
+                            {
+                                <li>@highlight</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section id="contact" style="border-bottom:none;">
+    <div class="container">
+        <div class="section-head">
+            <h2>Contact</h2>
+            <p>Let's build something reliable together</p>
+        </div>
+
+        <div class="contact-wrap">
+            <div class="contact-card">
+                <div class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0" /><path d="M22 6 12 13 2 6" /><path d="M2 6h20v12H2z" /></svg>
+                </div>
+                <div class="label">Email</div>
+                <div class="value">@Email</div>
+            </div>
+            <div class="contact-card">
+                <div class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                </div>
+                <div class="label">Phone</div>
+                <div class="value">@Phone</div>
+            </div>
+            <div class="contact-card">
+                <div class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                </div>
+                <div class="label">Location</div>
+                <div class="value">@Location</div>
+            </div>
+        </div>
+
+        <div class="contact-form-wrap">
+            <EditForm Model="_contactForm" OnValidSubmit="SubmitContactForm" class="contact-form">
+                <DataAnnotationsValidator />
+
+                <div class="form-row">
+                    <label for="cf-name">Name</label>
+                    <InputText id="cf-name" @bind-Value="_contactForm.Name" placeholder="Your name" />
+                    <ValidationMessage For="() => _contactForm.Name" />
+                </div>
+
+                <div class="form-row">
+                    <label for="cf-email">Email</label>
+                    <InputText id="cf-email" @bind-Value="_contactForm.Email" placeholder="you@example.com" />
+                    <ValidationMessage For="() => _contactForm.Email" />
+                </div>
+
+                <div class="form-row">
+                    <label for="cf-message">Message</label>
+                    <InputTextArea id="cf-message" @bind-Value="_contactForm.Message" rows="5" placeholder="What would you like to build?" />
+                    <ValidationMessage For="() => _contactForm.Message" />
+                </div>
+
+                <button type="submit" class="btn btn-primary" disabled="@_sending">
+                    @(_sending ? "Sending..." : "Send Message")
+                </button>
+
+                @if (_submitStatus == SubmitStatus.Success)
+                {
+                    <p class="form-status success">@_statusMessage</p>
+                }
+                else if (_submitStatus == SubmitStatus.Error)
+                {
+                    <p class="form-status error">@_statusMessage</p>
+                }
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+@code {
+    private const string Email = "bawloordiales@gmail.com";
+    private const string Phone = "0963 301 2966";
+    private const string Location = "Sto. Domingo, Orion, Bataan";
+
+    private enum SubmitStatus { None, Success, Error }
+
+    private readonly ContactFormModel _contactForm = new();
+    private bool _sending;
+    private SubmitStatus _submitStatus = SubmitStatus.None;
+    private string _statusMessage = string.Empty;
+
+    private async Task SubmitContactForm()
+    {
+        _sending = true;
+        _submitStatus = SubmitStatus.None;
+        try
+        {
+            var response = await Api.Http.PostAsJsonAsync("/api/contact", _contactForm);
+            if (response.IsSuccessStatusCode)
+            {
+                _submitStatus = SubmitStatus.Success;
+                _statusMessage = "Message sent — thanks for reaching out! I'll get back to you soon.";
+                _contactForm.Name = string.Empty;
+                _contactForm.Email = string.Empty;
+                _contactForm.Message = string.Empty;
+            }
+            else
+            {
+                _submitStatus = SubmitStatus.Error;
+                _statusMessage = "Couldn't send your message right now. Please try again later or email me directly.";
+            }
+        }
+        catch
+        {
+            _submitStatus = SubmitStatus.Error;
+            _statusMessage = "Couldn't reach the server. Please try again later or email me directly.";
+        }
+        finally
+        {
+            _sending = false;
+        }
+    }
+
+    private record Stat(string Value, string Label);
+
+    private readonly List<Stat> _stats = new()
+    {
+        new("1+", "Years Experience"),
+        new("8", "Certifications"),
+        new("4+", "Projects Done"),
+        new("13", "Tech Skills"),
+    };
+
+    private const string IconCode = "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"16 18 22 12 16 6\"/><polyline points=\"8 6 2 12 8 18\"/></svg>";
+    private const string IconLayout = "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"/></svg>";
+    private const string IconDatabase = "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\"/><path d=\"M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5\"/><path d=\"M3 12c0 1.66 4 3 9 3s9-1.34 9-3\"/></svg>";
+    private const string IconCheck = "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"20 6 9 17 4 12\"/></svg>";
+
+    private readonly List<SkillGroup> _skillGroups = new()
+    {
+        new() { Title = "Languages & Frameworks", Icon = IconCode, Skills = new[] { "C#", ".NET", "SQL", "JavaScript" } },
+        new() { Title = "Web Fundamentals", Icon = IconLayout, Skills = new[] { "HTML", "CSS", "Responsive Design" } },
+        new() { Title = "Database & Office", Icon = IconDatabase, Skills = new[] { "Database Management", "Microsoft Excel", "Microsoft Office" } },
+        new() { Title = "Practices & QA", Icon = IconCheck, Skills = new[] { "Software Testing / QA", "Troubleshooting", "Issue Tracking", "Git / Source Control" } },
+    };
+
+    private readonly List<ProficiencyItem> _proficiency = new()
+    {
+        new() { Name = "C# & .NET", Percent = 90 },
+        new() { Name = "SQL & Database Management", Percent = 85 },
+        new() { Name = "QA & Testing", Percent = 80 },
+    };
+
+    private readonly string[] _softSkills = { "Problem Solving", "Team Work", "Communication", "Adaptability" };
+
+    private const string IconTrophy = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z\"/><path d=\"M17 5h3a2 2 0 0 1-2 4M7 5H4a2 2 0 0 0 2 4\"/></svg>";
+    private const string IconCheckCircle = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg>";
+    private const string IconCart = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><circle cx=\"9\" cy=\"21\" r=\"1\"/><circle cx=\"20\" cy=\"21\" r=\"1\"/><path d=\"M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6\"/></svg>";
+    private const string IconGridLarge = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"/></svg>";
+
+    private readonly List<Project> _projects = new()
+    {
+        new()
+        {
+            Title = "Business Management System",
+            Description = "A comprehensive business application built at Noah Business Application, handling core operations with server-side logic in C# and data operations in SQL.",
+            Icon = IconGridLarge,
+            Tags = new[] { "C#", ".NET", "SQL" },
+            Featured = true,
+        },
+        new()
+        {
+            Title = "Table Tennis Tournament System",
+            Description = "A tournament management system for organizing table tennis brackets, tracking match results, and managing player standings from registration through finals.",
+            Icon = IconTrophy,
+            Tags = new[] { "C#", ".NET", "SQL" },
+            Featured = true,
+        },
+        new()
+        {
+            Title = "QA Testing Utilities",
+            Description = "A set of internal tools supporting the QA process — from issue tracking to test-case management — used to catch defects before they reach production.",
+            Icon = IconCheckCircle,
+            Tags = new[] { "C#", "SQL", "Testing" },
+            Featured = false,
+        },
+        new()
+        {
+            Title = "E-commerce Web Application",
+            Description = "A web storefront covering product catalog, cart, and checkout, backed by C#/.NET server-side logic and a SQL database.",
+            Icon = IconCart,
+            Tags = new[] { "C#", ".NET", "SQL", "JavaScript" },
+            Featured = false,
+        },
+    };
+
+    private readonly string[] _filters = { "All Projects", "Featured", ".NET", "SQL" };
+    private string _activeFilter = "All Projects";
+
+    private IEnumerable<Project> FilteredProjects => _activeFilter switch
+    {
+        "Featured" => _projects.Where(p => p.Featured),
+        ".NET" => _projects.Where(p => p.Tags.Contains(".NET")),
+        "SQL" => _projects.Where(p => p.Tags.Contains("SQL")),
+        _ => _projects,
+    };
+
+    private void SetFilter(string filter) => _activeFilter = filter;
+
+    private readonly List<ExperienceItem> _experience = new()
+    {
+        new()
+        {
+            Role = "Developer — C# / SQL Developer",
+            Organization = "Noah Business Application",
+            Period = "2025 – 2026",
+            Summary = "Back-end and web developer experienced in C# development, implementing secure server-side logic and efficient database operations using SQL.",
+            Highlights = new[]
+            {
+                "Develop and maintain business applications using C# and .NET.",
+                "Implement server-side logic, application functionality, and SQL database operations.",
+                "Troubleshoot application issues and implement technical solutions.",
+            },
+        },
+        new()
+        {
+            Role = "Developer — Deployment",
+            Organization = "Noah Business Application",
+            Period = "2025 – 2026",
+            Summary = "Responsible for application build, configuration, and deployment activities, ensuring system stability, security, and deployment efficiency.",
+            Highlights = new[]
+            {
+                "Support application releases and troubleshoot deployment-related issues.",
+                "Assist with application configuration and deployment requirements.",
+            },
+        },
+        new()
+        {
+            Role = "Quality Assurance",
+            Organization = "Noah Business Application",
+            Period = "2024 – 2025",
+            Summary = "Utilized issue tracking, knowledge base, deployment, code review, and source code repository tools.",
+            Highlights = new[]
+            {
+                "Performed application testing and quality assurance activities.",
+                "Identified and reported defects to support application quality and reliability.",
+            },
+        },
+    };
+}
