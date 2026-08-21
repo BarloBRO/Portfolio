@@ -24,5 +24,9 @@ services:
   - type: web
     name: barlo-portfolio
     env: static
-    buildCommand: dotnet publish BarloPortfolio.csproj -c Release -o publish_output
+    buildCommand: |
+      curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+      bash dotnet-install.sh --channel 9.0 --install-dir $HOME/.dotnet
+      export PATH="$HOME/.dotnet:$PATH"
+      dotnet publish BarloPortfolio.csproj -c Release -o publish_output
     staticPublishPath: ./publish_output/wwwroot
